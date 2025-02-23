@@ -10,7 +10,7 @@ public class Shot implements Runnable {
     int x;//子弹左边 为了和坦克同步
     int y;
     int direct = 0;//方向
-    int speed = 8;//速度
+    int speed = 12;//速度
    boolean isLive = true;//子弹是否存活
    
 	public Shot(int x, int y, int direct) {
@@ -46,14 +46,17 @@ public class Shot implements Runnable {
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + direct);
 			}
-			
+			//当子弹碰到障碍物销毁
+            if (x >= 200 && x <= 600 && y >= 500 && y<= 20) {
+            	isLive = false;
+                break;
+			}
 			//当子弹移动到面板的边界时，就应该销毁（把启动的子弹的线程销毁)
             if (!(x >= 0 && x <= 1000 && y >= 0 && y <= 750)) {
-                System.out.println("子弹线程退出");
                 isLive = false;
-                
                 break;
             }
+            
 		}
 	}
 	public int getX() {
